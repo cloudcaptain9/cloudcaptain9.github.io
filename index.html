@@ -4,7 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Onyekachi Emmanuel - Cloud DevOps Engineer</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 20px;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    section {
+      padding: 20px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    form button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #00f;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -37,14 +103,14 @@
   </section>
 
   <section id="contact">
-  <h2>Contact Me</h2>
-  <form action="https://formsubmit.co/onyekag733@gmail.com" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required><br><br>
-    <input type="email" name="email" placeholder="Your Email" required><br><br>
-    <textarea name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+    <h2>Contact Me</h2>
+    <form action="https://formsubmit.co/onyekag733@gmail.com" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required><br><br>
+      <input type="email" name="email" placeholder="Your Email" required><br><br>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
 
   <section id="projects">
     <h2>GitHub Projects</h2>
@@ -56,9 +122,25 @@
     <p><a href="https://github.com/cloudcaptain9" target="_blank">GitHub: cloudcaptain9</a></p>
   </footer>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <script>
+    // Simple script to fetch GitHub repos and show them
+    const username = "cloudcaptain9";
+    const repoContainer = document.getElementById("github-projects");
 
+    fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+      .then(response => response.json())
+      .then(repos => {
+        repoContainer.innerHTML = "";
+        repos.slice(0, 5).forEach(repo => {
+          const repoElem = document.createElement("p");
+          repoElem.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>: ${repo.description || "No description"}`;
+          repoContainer.appendChild(repoElem);
+        });
+      })
+      .catch(error => {
+        repoContainer.innerHTML = "Failed to load projects.";
+        console.error("Error fetching repos:", error);
+      });
+  </script>
 </body>
 </html>
