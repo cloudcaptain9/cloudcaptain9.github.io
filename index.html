@@ -2,199 +2,788 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Onyekachi Emmanuel - Cloud DevOps Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onyekachi Emmanuel - DevOps Engineer</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
-      padding: 0 20px;
-      line-height: 1.6;
-      background-color: #f4f4f4;
-      color: #333;
+      padding: 0;
+      box-sizing: border-box;
     }
 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
     header {
-      background-color: #222;
-      color: #fff;
-      padding: 20px 0;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      color: white;
+      padding: 2rem;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Navigation Sidebar */
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: #1e3a8a;
+      color: white;
+      transition: left 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      padding-top: 60px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+    }
+
+    .sidebar nav ul li {
+      margin: 0;
+    }
+
+    .sidebar nav ul li a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s;
+      border-left: 4px solid transparent;
+    }
+
+    .sidebar nav ul li a:hover,
+    .sidebar nav ul li a.active {
+      background: rgba(255,255,255,0.1);
+      border-left-color: #3b82f6;
+    }
+
+    /* Toggle Button */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      z-index: 999;
+      transition: background 0.3s;
+    }
+
+    .menu-toggle:hover {
+      background: #0f172a;
+    }
+
+    .menu-toggle.hide {
+      display: none;
+    }
+
+    /* Main Content */
+    main {
+      margin-left: 0;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 80px;
     }
 
     section {
-      padding: 20px 0;
-      border-bottom: 1px solid #ddd;
+      background: white;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    section.active {
+      display: block;
     }
 
     h2 {
-      color: #333;
-    }
-
-    ul {
-      list-style-type: square;
-      padding-left: 20px;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      max-width: 500px;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    form button {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    form button:hover {
-      background-color: #0056b3;
-    }
-
-    footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 20px;
-    }
-
-    a {
-      color: #0099cc; /* Lighter blue color */
-    }
-
-    a:hover {
-      color: #006699; /* Darker blue when hovered */
+      color: #1e3a8a;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      border-bottom: 3px solid #3b82f6;
+      padding-bottom: 0.5rem;
     }
 
     h3 {
-      margin-bottom: 5px;
+      color: #1e3a8a;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
     }
 
-    .job {
-      margin-bottom: 20px;
+    /* Profile Section */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .profile-info h3 {
+      margin-top: 0;
+    }
+
+    .contact-info {
+      background: #f0f4ff;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    .contact-info p {
+      margin: 0.5rem 0;
+    }
+
+    .contact-info a {
+      color: #1e3a8a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-category {
+      background: #f0f4ff;
+      padding: 1.5rem;
+      border-radius: 6px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .skill-category h4 {
+      color: #1e3a8a;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-category p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    /* Experience Section */
+    .job-card {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .job-card h3 {
+      margin-top: 0;
+      color: #1e3a8a;
+    }
+
+    .job-meta {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .job-card ul {
+      margin-left: 1.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .job-card li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Projects Section */
+    .project-card {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e5e7eb;
+      transition: box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .project-title {
+      color: #1e3a8a;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-tech {
+      background: #e0e7ff;
+      color: #1e3a8a;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      margin-right: 0.5rem;
+    }
+
+    .project-card ul {
+      margin-left: 1.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .project-card li {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* Blog Section */
+    .blog-post {
+      background: white;
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .blog-post h3 {
+      margin-top: 0;
+    }
+
+    .blog-meta {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .blog-content {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .blog-content p {
+      margin-bottom: 1rem;
+    }
+
+    .blog-content h4 {
+      color: #1e3a8a;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .blog-content code {
+      background: #f0f4ff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      color: #1e3a8a;
+    }
+
+    /* Certifications */
+    .cert-item {
+      background: #f0f4ff;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .cert-item strong {
+      color: #1e3a8a;
+    }
+
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      gap: 1rem;
+    }
+
+    input, textarea {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    button {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #0f172a;
+    }
+
+    footer {
+      background: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Overlay for sidebar */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 1rem;
+      }
+
+      section {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Sidebar Navigation -->
+  <div class="sidebar-overlay" id="overlay"></div>
+  <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <ul>
+        <li><a href="#" class="nav-link active" data-section="profile">👤 Profile</a></li>
+        <li><a href="#" class="nav-link" data-section="about">📋 About</a></li>
+        <li><a href="#" class="nav-link" data-section="experience">💼 Experience</a></li>
+        <li><a href="#" class="nav-link" data-section="skills">🛠️ Skills</a></li>
+        <li><a href="#" class="nav-link" data-section="projects">🚀 Projects</a></li>
+        <li><a href="#" class="nav-link" data-section="certifications">🎓 Certifications</a></li>
+        <li><a href="#" class="nav-link" data-section="blog">✍️ Blog</a></li>
+        <li><a href="#" class="nav-link" data-section="contact">📧 Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Header -->
   <header>
     <h1>Onyekachi Emmanuel</h1>
-    <p>Cloud DevOps Engineer | AWS Certified | IT Support Background</p>
+    <p>DevOps Engineer | Cloud Infrastructure Specialist | AWS Certified</p>
   </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Cloud DevOps Engineer with hands-on experience in cloud infrastructure, automation, and system support. Certified AWS professional with a passion for streamlining deployments and improving scalability.</p>
-  </section>
+  <!-- Main Content -->
+  <main>
+    <!-- Profile Section -->
+    <section id="profile" class="active">
+      <h2>Profile</h2>
+      <div class="profile-grid">
+        <div class="profile-info">
+          <h3>DevOps Engineer</h3>
+          <p>Results-driven DevOps Engineer with proven expertise in cloud infrastructure, containerization, and CI/CD automation. Successfully designed and implemented scalable deployment pipelines that reduced deployment time by 70% and achieved 99.9% uptime SLA. Strong background in AWS services, Kubernetes orchestration, and Infrastructure as Code.</p>
+          <p><strong>Specialization:</strong> Cloud Architecture • Container Orchestration • CI/CD Automation • Infrastructure as Code • Monitoring & Security</p>
+        </div>
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <p><strong>Email:</strong> <a href="mailto:onyekag733@gmail.com">onyekag733@gmail.com</a></p>
+          <p><strong>Phone:</strong> +234-07068380810</p>
+          <p><strong>Location:</strong> Available for Remote Work Globally</p>
+          <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/onyeka-godwin" target="_blank">linkedin.com/in/onyeka-godwin</a></p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/cloudcaptain9" target="_blank">github.com/cloudcaptain9</a></p>
+        </div>
+      </div>
+    </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li>AWS (EC2, S3, IAM, Lambda)</li>
-      <li>CI/CD (GitHub Actions, Jenkins)</li>
-      <li>Docker & Kubernetes</li>
-      <li>Linux, Bash Scripting</li>
-      <li>Infrastructure as Code (Terraform, CloudFormation)</li>
-    </ul>
-  </section>
-
-  <section id="experience">
-    <h2>Experience</h2>
-
-   <div class="job">
-      <h3>AWS Solution Architect – BullStand Ltd</h3>
-      <p><strong>Feb 2024 – Present | Remote</strong></p>
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I'm a passionate DevOps Engineer with a proven track record of designing and implementing scalable cloud solutions. With experience managing AWS infrastructure supporting 100K+ daily users, I specialize in automating deployments, optimizing infrastructure costs, and ensuring system reliability.</p>
+      
+      <h3>Key Achievements</h3>
       <ul>
-        <li>Create cloud solutions that scale with business needs.</li>
-        <li>Build systems that are fault-tolerant and can recover quickly from failures.</li>
-        <li>  Implement best practices for securing AWS resources.</li>
-        <li>Document architecture decisions, standards, and best practices.</li>
+        <li><strong>70% Reduction</strong> in deployment time through automated CI/CD pipelines</li>
+        <li><strong>99.9% Uptime SLA</strong> achieved through robust monitoring and alerting</li>
+        <li><strong>30% Cost Reduction</strong> through AWS resource optimization</li>
+        <li><strong>15+ Applications</strong> successfully containerized and orchestrated</li>
+        <li><strong>50+ AWS Resources</strong> managed through Infrastructure as Code</li>
+        <li><strong>100K+ Daily Users</strong> supported through scalable infrastructure</li>
       </ul>
-    </div>
-    
-    <div class="job">
-      <h3>IT Support Engineer – Atomkruz Solutions</h3>
-      <p><strong>Jan 2022 – Present | Hybride</strong></p>
-      <ul>
-        <li>Repair and maintain desktops, laptops, printers, and other hardware.</li>
-        <li>Monitor and maintain the organization’s LAN, Wi-Fi, and internet access.</li>
-        <li> Install, configure, and update operating systems and applications.</li>
-        <li>Diagnose and resolve issues with hardware, software, and user systems..</li>
-      </ul>
-    </div>
 
-    <div class="job">
-      <h3>IT Support Specialist – Elchuks Systems</h3>
-      <p><strong>May 2018 – Dec 2022 | Lagos, Nigeria</strong></p>
-      <ul>
-        <li>Provided technical support for 200+ users, maintaining a 95% satisfaction rating.</li>
-        <li>Repair and maintain desktops, laptops, printers, and other hardware.</li>
-        <li>Diagnose and resolve issues with hardware, software, and user systems..</li>
-      </ul>
-    </div>
-  </section>
+      <h3>Professional Philosophy</h3>
+      <p>I believe in building reliable, scalable, and cost-effective cloud infrastructure. My approach combines best practices in automation, security, and monitoring to ensure systems are production-ready and maintainable. I'm committed to continuous learning and staying updated with the latest DevOps technologies and methodologies.</p>
+    </section>
 
-  <section id="certifications">
-    <h2>Certifications</h2>
-    <ul>
-      <li>AWS Certified Cloud Practitioner</li>
-      <li>AWS Certified Solutions Architect – Associate</li>
-    </ul>
-  </section>
+    <!-- Experience Section -->
+    <section id="experience">
+      <h2>Professional Experience</h2>
 
-  <section id="professional-training">
-    <h2>Professional Training</h2>
-    <ul>
-      <li><strong>ALX Africa</strong> - Cloud Computing, August 2024 - April 2025</li>
-      <li><strong>IBT Learning</strong> - DevOps Engineer, February 2025 - Present</li>
-    </ul>
-  </section>
+      <div class="job-card">
+        <h3>DevOps Engineer Intern</h3>
+        <div class="job-meta">GoC Systems | May 2024 – Present</div>
+        <ul>
+          <li>Designed comprehensive CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time from 2 hours to 20 minutes</li>
+          <li>Architected and deployed scalable AWS infrastructure serving 100K+ daily active users using EC2, RDS, and S3</li>
+          <li>Containerized 15+ legacy applications using Docker and orchestrated deployment on Kubernetes clusters</li>
+          <li>Implemented Infrastructure as Code using Terraform, managing 50+ AWS resources across multiple environments</li>
+          <li>Established monitoring and alerting systems using CloudWatch and Prometheus, achieving 99.9% uptime SLA</li>
+          <li>Managed AWS infrastructure including VPC design, security groups, load balancers, and auto-scaling configurations</li>
+        </ul>
+      </div>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <form action="https://formsubmit.co/onyekag733@gmail.com" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required><br><br>
-      <input type="email" name="email" placeholder="Your Email" required><br><br>
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+      <div class="job-card">
+        <h3>Cloud Solutions Architect</h3>
+        <div class="job-meta">Bullstand | September 2023 – February 2024</div>
+        <ul>
+          <li>Migrated monolithic applications to microservices architecture using Docker containers</li>
+          <li>Reduced infrastructure costs by 30% through AWS resource optimization and right-sizing</li>
+          <li>Implemented automated backup and disaster recovery procedures for critical systems</li>
+          <li>Collaborated with development teams to establish GitOps workflows and best practices</li>
+        </ul>
+      </div>
+    </section>
 
-  <section id="projects">
-    <h2>GitHub Projects</h2>
-    <div id="github-projects">Loading projects...</div>
-  </section>
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2>Technical Skills</h2>
+      
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h4>Cloud & Infrastructure</h4>
+          <p>Amazon Web Services (AWS), EC2, S3, VPC, Lambda, EKS, RDS, CloudWatch, IAM, Route 53, CloudFormation</p>
+        </div>
 
+        <div class="skill-category">
+          <h4>DevOps & Automation</h4>
+          <p>Docker, Kubernetes, Helm, Jenkins, GitHub Actions, AWS CodePipeline, GitLab CI/CD</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Infrastructure as Code</h4>
+          <p>Terraform, AWS CloudFormation, Ansible</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Monitoring & Observability</h4>
+          <p>CloudWatch, Prometheus, Grafana, ELK Stack, DataDog, New Relic</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Programming & Scripting</h4>
+          <p>Python, Bash, PowerShell, YAML, JSON, SQL</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Version Control</h4>
+          <p>Git, GitHub, GitLab, Bitbucket</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Security & Compliance</h4>
+          <p>AWS Security Hub, GuardDuty, IAM Policies, Security Groups, Encryption, SOC 2, PCI DSS</p>
+        </div>
+
+        <div class="skill-category">
+          <h4>Databases</h4>
+          <p>MySQL, PostgreSQL, MongoDB, Redis</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2>Key Projects</h2>
+
+      <div class="project-card">
+        <div class="project-title">Multi-Environment Cloud Infrastructure</div>
+        <span class="project-tech">AWS</span>
+        <span class="project-tech">Terraform</span>
+        <span class="project-tech">Kubernetes</span>
+        <span class="project-tech">Jenkins</span>
+        <span class="project-tech">Docker</span>
+        <ul>
+          <li>Designed and deployed complete AWS infrastructure for web application across dev/staging/production environments</li>
+          <li>Implemented blue-green deployment strategy using Application Load Balancer and Target Groups</li>
+          <li>Configured auto-scaling policies and CloudWatch monitoring for cost optimization and performance</li>
+          <li><strong>Results:</strong> 40% cost reduction and 99.9% application availability</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-title">Microservices Containerization Pipeline</div>
+        <span class="project-tech">Docker</span>
+        <span class="project-tech">Kubernetes</span>
+        <span class="project-tech">GitHub Actions</span>
+        <span class="project-tech">AWS ECR</span>
+        <ul>
+          <li>Containerized 10+ microservices and established automated build/push workflows to ECR</li>
+          <li>Created Kubernetes manifests and Helm charts for consistent deployments across environments</li>
+          <li>Implemented rolling updates and rollback strategies for zero-downtime deployments</li>
+          <li><strong>Results:</strong> 60% improvement in deployment scalability and reduced complexity</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-title">Infrastructure Monitoring System</div>
+        <span class="project-tech">Prometheus</span>
+        <span class="project-tech">Grafana</span>
+        <span class="project-tech">ELK Stack</span>
+        <span class="project-tech">CloudWatch</span>
+        <ul>
+          <li>Built comprehensive monitoring solution for infrastructure and application metrics</li>
+          <li>Configured proactive alerting rules and notification channels</li>
+          <li>Created custom dashboards for development, operations, and business stakeholders</li>
+          <li><strong>Results:</strong> 50% reduction in Mean Time To Resolution (MTTR)</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-title">GitHub Projects</div>
+        <div id="github-projects" style="margin-top: 1rem;">Loading projects...</div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+      <h2>Certifications & Training</h2>
+
+      <h3>Active Certifications</h3>
+      <div class="cert-item">
+        <strong>AWS Certified Cloud Practitioner</strong> — 2024
+      </div>
+
+      <h3>In Progress</h3>
+      <div class="cert-item">
+        <strong>AWS Certified Solutions Architect - Associate</strong> — In Progress
+      </div>
+      <div class="cert-item">
+        <strong>Certified Kubernetes Administrator (CKA)</strong> — In Progress
+      </div>
+
+      <h3>Professional Training</h3>
+      <div class="cert-item">
+        <strong>Cloud Computing Bootcamp</strong> | ALX Africa | 2024 (12-month intensive program)
+      </div>
+      <div class="cert-item">
+        <strong>DevOps Engineering Bootcamp</strong> | IBT Learning | 2024 (6-month intensive program)
+      </div>
+
+      <h3>Education</h3>
+      <div class="cert-item">
+        <strong>Higher National Diploma in Food Technology</strong> | Yaba College of Technology | 2020
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog">
+      <h2>Blog & Articles</h2>
+
+      <div class="blog-post">
+        <h3>Getting Started with DevOps: My Journey</h3>
+        <div class="blog-meta">Published on March 2025</div>
+        <div class="blog-content">
+          <p>DevOps has transformed the way software is developed, tested, and deployed. In this article, I'll share my journey into DevOps and the key lessons I've learned along the way.</p>
+          
+          <h4>What is DevOps?</h4>
+          <p>DevOps is a set of practices that combines software development and IT operations. It aims to shorten the development lifecycle and provide continuous delivery with high software quality.</p>
+
+          <h4>Key Principles</h4>
+          <ul>
+            <li><strong>Automation:</strong> Automate repetitive tasks to reduce errors and increase efficiency</li>
+            <li><strong>Collaboration:</strong> Bridge the gap between development and operations teams</li>
+            <li><strong>Continuous Improvement:</strong> Regularly monitor, measure, and improve processes</li>
+            <li><strong>Infrastructure as Code:</strong> Manage infrastructure through code for consistency and scalability</li>
+          </ul>
+
+          <h4>Getting Started</h4>
+          <p>If you're new to DevOps, I recommend starting with the fundamentals: learn Linux/Bash, understand containerization with Docker, and explore CI/CD pipelines with tools like Jenkins or GitHub Actions. Once you're comfortable with these, move on to cloud platforms like AWS.</p>
+
+          <p><em>Stay tuned for more articles on cloud infrastructure, Kubernetes, and advanced DevOps practices!</em></p>
+        </div>
+      </div>
+
+      <div class="blog-post">
+        <h3>CI/CD Pipelines: Automating Your Deployments</h3>
+        <div class="blog-meta">Published on February 2025</div>
+        <div class="blog-content">
+          <p>CI/CD (Continuous Integration/Continuous Deployment) is at the heart of modern DevOps practices. Learn how to build automated pipelines that reduce deployment time and improve code quality.</p>
+
+          <h4>Benefits of CI/CD</h4>
+          <ul>
+            <li>Faster deployment cycles</li>
+            <li>Early error detection</li>
+            <li>Improved code quality</li>
+            <li>Reduced manual errors</li>
+          </ul>
+
+          <p>In my experience, implementing CI/CD pipelines can reduce deployment time by up to 70%, which is exactly what we achieved at GoC Systems using Jenkins and GitHub Actions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Get In Touch</h2>
+      <p>Feel free to reach out to me for collaboration opportunities, technical discussions, or any inquiries about my work.</p>
+      
+      <form action="https://formsubmit.co/onyekag733@gmail.com" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
   <footer>
-    <p>📧 Email: onyekag733@gmail.com | 📍 Lagos, Nigeria</p>
-    <p><a href="https://github.com/cloudcaptain9" target="_blank">GitHub: cloudcaptain9</a></p>
+    <p>&copy; 2025 Onyekachi Emmanuel. All rights reserved.</p>
+    <p>
+      <a href="mailto:onyekag733@gmail.com">Email</a> | 
+      <a href="https://github.com/cloudcaptain9" target="_blank">GitHub</a> | 
+      <a href="https://linkedin.com/in/onyeka-godwin" target="_blank">LinkedIn</a>
+    </p>
   </footer>
 
   <script>
-    const username = "cloudcaptain9";
-    const repoContainer = document.getElementById("github-projects");
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
 
-    fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+    // Toggle sidebar
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Close sidebar when overlay clicked
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Navigation functionality
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.getAttribute('data-section');
+        
+        // Remove active class from all links and sections
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        
+        // Add active class to clicked link and corresponding section
+        link.classList.add('active');
+        document.getElementById(sectionId).classList.add('active');
+        
+        // Close sidebar on mobile
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    });
+
+    // Fetch GitHub projects
+    const githubContainer = document.getElementById('github-projects');
+    fetch('https://api.github.com/users/cloudcaptain9/repos?sort=updated')
       .then(response => response.json())
       .then(repos => {
-        repoContainer.innerHTML = "";
+        githubContainer.innerHTML = '';
         repos.slice(0, 5).forEach(repo => {
-          const repoElem = document.createElement("p");
-          repoElem.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>: ${repo.description || "No description"}`;
-          repoContainer.appendChild(repoElem);
+          const div = document.createElement('div');
+          div.style.marginBottom = '1rem';
+          div.innerHTML = `
+            <p>
+              <strong><a href="${repo.html_url}" target="_blank" style="color: #1e3a8a; text-decoration: none;">${repo.name}</a></strong>
+              <br>
+              <span style="color: #666; font-size: 0.9rem;">${repo.description || 'No description provided.'}</span>
+            </p>
+          `;
+          githubContainer.appendChild(div);
         });
       })
       .catch(error => {
-        repoContainer.innerHTML = "Failed to load projects.";
-        console.error("Error fetching repos:", error);
+        githubContainer.innerHTML = '<p style="color: #666;">Failed to load projects.</p>';
+        console.error(error);
       });
   </script>
 </body>
